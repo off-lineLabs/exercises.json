@@ -24,6 +24,14 @@ If you are looking for a complete dataset with over 2,500+ exercises, 10,000+ im
 1. `npm run build:json` - creates a JSON file with all exercises
 2. `npm run build:psql` - creates a SQL file for PostgreSQL to load all exercises in
 
+## GitHub Actions Workflow
+
+A "Compile Exercises" workflow is available that can be manually triggered from the Actions tab. This workflow:
+- Compiles all individual exercise.json files into a single combined file
+- Stores the result in the `en/` folder (for English version)
+- Commits and pushes the changes back to the repository
+- Provides the file as a downloadable artifact
+
 ## Public JSON API Service
 
 You can use the _raw_ links served by GitHub, example:
