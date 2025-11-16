@@ -1,5 +1,5 @@
 import { readdirSync, Dirent, writeFileSync } from "fs";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import { Exercise } from "../types/exercise";
 
 const getDirectories = (folder: string): Array<Dirent> => {
@@ -11,13 +11,19 @@ const getDirectories = (folder: string): Array<Dirent> => {
 };
 
 const getImageFiles = (exerciseFolder: string): Array<string> => {
-  const exercisePath = resolve(`./exercises/${exerciseFolder}`);
-  const files = readdirSync(exercisePath, { withFileTypes: true });
+  const imagesPath = resolve(`./exercises/${exerciseFolder}/images`);
   
-  return files
-    .filter((file) => file.isFile() && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name))
-    .map((file) => `${exerciseFolder}/${file.name}`)
-    .sort();
+  try {
+    const files = readdirSync(imagesPath, { withFileTypes: true });
+    
+    return files
+      .filter((file) => file.isFile() && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name))
+      .map((file) => `${exerciseFolder}/images/${file.name}`)
+      .sort();
+  } catch (error) {
+    // Return empty array if images folder doesn't exist
+    return [];
+  }
 };
 
 const getExercises = (directories: Array<Dirent>): Array<Exercise> => {
